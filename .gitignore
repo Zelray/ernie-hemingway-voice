@@ -44,6 +44,9 @@ pipeline/eval/eval_cache/
 pipeline/_*
 *.log
 *pilot*
+# ...but the numbered pipeline steps ARE the pipeline — keep them:
+!pipeline/02_pilot_generate.py
+!pipeline/03_flatten_pilot.py
 
 # --- Internal ops docs & endpoint-specific helpers (not for the public repo) ---
 demo/deploy/

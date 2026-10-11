@@ -2,7 +2,7 @@
 Promote bucket2_all_v3.jsonl -> bucket2_all.jsonl (FINAL). GATED: only run AFTER
 the changed-rows re-review is clean (0 hard leak + 0 hard/false-entity answerability).
 
-Footgun guards (HANDOFF + advisor):
+Footgun guards (from advisor reviews):
   - The argless `python pipeline/08_bucket2_gate.py` re-merges the V1 bucket2/*.jsonl
     into bucket2_all.jsonl -> would CLOBBER this promotion. So we ALSO copy the v3
     per-work files into bucket2/ (after backing up the v1 originals), making an

@@ -3,17 +3,17 @@
 **Fine-tuning beat prompting for voice — and here's the measured proof.**
 
 Ernie is Qwen2.5-3B-Instruct fine-tuned with QLoRA on Ernest Hemingway's **public-domain** works
-— not to *continue prose*, but to *answer questions* in his voice. It won **73%** of blind,
-randomized head-to-head comparisons against the same base model given an honest, strong
+— not to *continue prose*, but to *answer questions* in his voice. On real-text tasks it won **73%**
+of blind, randomized head-to-head comparisons against the same base model given an honest, strong
 "write like Hemingway" prompt — judged by an independent LLM judge (GPT-4o) that had no stake
 in the result.
 
 | Headline result (epoch 3) | |
 |---|---|
 | **Blind-judge win rate vs fairly-prompted baseline (real-text tasks)** | **73%** (GPT-4o judge, 35–13) |
-| Overall win rate, all task types | 86% |
+| Overall win rate, all task types | 86% *(includes the discounted slice — see footnotes)* |
 | Capability retained vs base model (math / code / facts / reasoning) | 11 / 12 (92%) |
-| Sentence-rhythm variance (higher = human-like) | **5.92** — real Hemingway 6.46, prompted baseline 1.55 |
+| Sentence-length spread, stdev in words (higher = human-like) | **5.92** — real Hemingway 6.46, prompted baseline 1.55 |
 
 That last row is the thesis in one number. A prompt can make a model *imitate short sentences*
 (the baseline's flat 1.55 — a monotone caricature). Only training on real examples teaches the
@@ -36,9 +36,9 @@ A 3-column compare, built to be a **fair fight** — the kind a skeptical client
 Every ⓘ popup in the UI shows the *actual* system prompt used per column, so anyone can verify
 the fight was fair.
 
-The prompting baseline's ceiling is structural: we tested three temperatures and a hardened
-prompt, and the base 3B model maxed out at ~10-word sentences with variance ≈ 1.6 at every
-setting. **You cannot prompt in a rhythm the model doesn't have.**
+The prompting baseline's ceiling is structural: across the temperatures we tried, with a prompt
+that explicitly demanded varied sentence length, the base 3B model never exceeded ~10-word
+sentences (spread ≈ 1.6). **You cannot prompt in a rhythm the model doesn't have.**
 
 ## Why this project exists
 
@@ -89,11 +89,12 @@ built with two complementary techniques:
   - **Bucket 4 — General instruction-following.** Questions and practical tasks seeded from [Databricks dolly-15k](https://huggingface.co/datasets/databricks/dolly-15k), answered in-voice, so the model stays a *general assistant* that happens to talk like Hemingway.
 
 Quality was enforced by **gates, not vibes**: cadence/stylometry gates on every generated answer,
-content-hash + 5-gram-Jaccard near-dup elimination across buckets, faithfulness gates on rewrites,
-an 8-way parallel adversarial review pass that caught hallucinated facts and lazy pastiche
-(29 flags → 5 worst offenders dropped), and a **group-stratified train/holdout split** that makes
-train/eval leakage structurally impossible. Final tally: 0 exact dups, 0 near-dup pairs,
-0 train/eval overlap — all recorded in `pipeline/assemble_report.json`.
+content-hash + 5-gram-Jaccard near-dup elimination across buckets, and faithfulness gates on
+rewrites. Per-bucket adversarial review passes caught hallucinated facts and lazy pastiche
+(29 flags → 5 dropped on the instruction bucket; a harsher bucket-2 review forced a full
+regeneration). A **group-stratified train/holdout split** makes train/eval *near-duplicate*
+leakage structurally impossible. Final tally: 0 exact dups, 0 near-dup pairs, 0 train/eval
+overlap — all recorded in `pipeline/assemble_report.json`.
 
 ## Training (a ~$0 run on a free Colab T4)
 
@@ -120,7 +121,8 @@ Four independent checks (`pipeline/eval/score_generations.py`):
 
 ```text
 1. Corpus     — the 5 .txt files are included (US public domain). python pipeline/01_clean_corpus.py
-2. Dataset    — generation scripts call the Gemini API (free tier suffices); see pipeline/gen_*.py
+2. Dataset    — put a (free-tier) Gemini API key in gemini_key.txt at the repo root (gitignored);
+                then follow the numbered pipeline scripts (01–09)
 3. Train      — upload pipeline/train.jsonl + eval_holdout.jsonl in Colab, run the notebook (free T4)
 4. Evaluate   — python pipeline/eval/score_generations.py --in generations.json
 5. Demo       — cd demo && ./run_demo.ps1  (needs Ollama + the merged model; or point the

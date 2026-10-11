@@ -45,12 +45,12 @@ baseline — on 100 held-out test questions, into one small file you bring back 
 
 - Top menu → **Runtime → Run all**.
 - Step 2 will pop up a **file picker** — select the two files from your computer:
-  **`train.jsonl`** and **`eval_holdout.jsonl`** (Joey gave you these).
+  **`train.jsonl`** and **`eval_holdout.jsonl`** (both are in this repo under `pipeline/`).
 - Everything else runs by itself. When it finishes, your browser **downloads `generations.json`** —
-  send that one file back to Joey for scoring.
+  the file the eval harness (`pipeline/eval/score_generations.py`) scores.
 
-> If a cell ever turns red with an error, stop and send Joey a screenshot. Don't try to fix it —
-> that's my job, not yours.
+> If a cell ever turns red with an error, stop and read the message — don't try to fix things
+> mid-run. Every step is written to fail safely and tell you what to keep.
 """
 
 CELL_INSTALL = r"""#@title Step 1 — Install the tools (≈2 min, lots of text is normal)
@@ -197,7 +197,7 @@ assert len(ckpts) >= 1, "No checkpoints saved — check Step 6 save_strategy."
 CELL_SAVE_ADAPTERS = r"""#@title Step 8.5 — SAVE the trained models first (insurance — downloads a small zip)
 # Colab is temporary: if anything below hiccups, this zip is your whole hour of training, saved.
 # It downloads ernie_adapters.zip (just tens of MB — the trained "voice" layers, not the heavy
-# optimizer files). If a later step ever errors, send Joey this zip and he recovers everything.
+# optimizer files). If a later step ever errors, this zip is everything you need to recover.
 import os, glob, zipfile
 ckpts = sorted(glob.glob("outputs/checkpoint-*"), key=lambda p: int(p.split('-')[-1]))
 SKIP = ("optimizer", "scheduler", "rng_state", "trainer_state", "training_args", "global_step")
@@ -227,7 +227,7 @@ from unsloth import FastLanguageModel
 
 # ---- The fair-fight baseline system prompt (the honest "write like Hemingway" prompt) ----
 # This is the prompted competitor our fine-tune must beat. It is deliberately STRONG:
-# a rigged win is worthless. Joey may tune this once before the final number.
+# a rigged win is worthless. Tune this deliberately, once, before the final number.
 BASELINE_SYSTEM = (
     "You are a writing assistant. Answer the user's request in the distinctive prose style of "
     "Ernest Hemingway: short, plain, declarative sentences; simple concrete words; the 'iceberg' "
@@ -312,7 +312,7 @@ for i, ck in enumerate(ckpts, 1):
     except Exception as e:
         print(f"  !! Could not load {ck}: {e}\n"
               f"  !! Skipping epoch {i}. Your trained models are SAFE in ernie_adapters.zip (Step 8.5) —\n"
-              f"  !! send Joey that zip plus this message and he recovers it. Continuing with the rest.")
+              f"  !! keep that zip; it contains everything needed to recover. Continuing with the rest.")
         continue
     for r, a in zip(evalset, gen_eval(m, tok, NEUTRAL_SYSTEM)):
         rows[r["id"]][f"epoch{i}"] = a
@@ -329,7 +329,7 @@ files.download("generations.json")
 """
 
 CELL_EXPORT = r"""#@title Step 10 — (LATER, after we pick the winning epoch) Export for the local demo
-# DO NOT run this yet. Once Joey scores generations.json and tells you which epoch won,
+# DO NOT run this yet. Once generations.json has been scored (see pipeline/eval/) and you know
 # set WINNING_EPOCH below and run this cell to download a GGUF you can serve locally (Ollama / LM Studio).
 WINNING_EPOCH = 2  #@param {type:"integer"}
 import glob

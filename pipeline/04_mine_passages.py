@@ -11,10 +11,10 @@ WHY THIS EXISTS (plain English):
 
   This script does the FREE, LOCAL half: it scans the 5 cleaned corpus files and
   extracts clean candidate PROSE passages to flatten. It calls NO API and spends
-  NO money — it is pure text scissors (per CLAUDE.md: "code chews the bulk data;
+  NO money — it is pure text scissors (the project rule: "code chews the bulk data;
   the model only sees small summaries").
 
-THE MINING RECIPE (from the Data-Engineer review in HANDOFF.md):
+THE MINING RECIPE (from a data-engineering design review):
   - 40-150 words, on FULL sentence boundaries (never cut mid-sentence).
   - PROSE ONLY. Exclude: dialogue / dialogue-heavy spans (double-quote marks,
     attribution), QUOTELESS speech & embedded prayer/monologue (caught by a
