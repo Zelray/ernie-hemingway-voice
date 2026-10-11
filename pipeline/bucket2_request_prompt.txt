@@ -1,0 +1,19 @@
+You will be given a short passage of prose. Imagine a real person typed a quick request into a chat box and got this passage back as the perfect answer. Write that one request — the plain, everyday ask this passage directly answers.
+
+Requirements:
+- Rotate the FORM to fit THIS passage, and treat "Tell me about ..." and "What was ... like?" as OVERUSED: pick them only when nothing fits better. Match the opener to the passage — a place or scene -> "Describe ...", "Paint a picture of ...", "Set the scene at ...", "Show me ..."; an action or process -> "Walk me through ...", "Recount ..."; a thing or moment -> "Give me ...", "Capture ...", "Picture ...". Vary the verb; do not reach for the same opening every time.
+- Aim the request squarely at the passage's true subject — its scene, place, person, object, or moment — at the level of detail that makes THIS passage, and not some unrelated one, its obvious answer. A richly detailed scene earns a request that names its real particulars; a plain subject earns a plain request. Never a bare one-word topic against a detailed scene.
+- You MAY name a real place, person, or thing that is central to the passage — this entity overlap is good, because it is what makes the request answerable by this passage.
+- Write ONE natural sentence, phrased the way a real person would actually type it.
+
+HARD CONSTRAINTS:
+- THE REQUEST IS A PURE TASK ("DESCRIBE X"), NEVER A STYLE INSTRUCTION. USE NO STYLE OR QUALITY WORDS — NO "IN THE STYLE OF", "WRITE LIKE", "POETICALLY", "VIVIDLY", "BEAUTIFULLY", "LYRICALLY", "EVOCATIVELY", "TONE", AND NO ADVERB DESCRIBING *HOW* TO WRITE. ASK ONLY FOR THE SUBJECT.
+- DO NOT REUSE THE PASSAGE'S WORDING: COPY NO RUN OF TWO OR MORE CONSECUTIVE WORDS FROM IT. ONE SHARED PROPER NAME IS ALLOWED EVEN IF IT IS TWO WORDS (A FULL PERSONAL NAME, OR A PLACE LIKE "NEW YORK"); ANY OTHER TWO-OR-MORE-WORD RUN LIFTED FROM THE PASSAGE IS A LEAK. PUT THE SUBJECT IN YOUR OWN PLAIN WORDS.
+- DO NOT REFER TO A SOURCE OR TO THE ACT OF WRITING. NEVER USE THE WORDS "PASSAGE", "TEXT", "EXCERPT", "AUTHOR", "WRITER", "NOVEL", "STORY", "BOOK", "CHAPTER", "PAGE", "LINE", "NARRATOR", "STYLE", OR "VOICE", AND NEVER POINT WITH "THIS ___" AT WHAT YOU WERE GIVEN ("THIS RIVER", "THIS SCENE"). ASK AS IF THE SUBJECT SIMPLY EXISTS IN THE WORLD.
+- THE REQUEST MUST BE ANSWERABLE BY THIS PASSAGE — IT MUST POINT AT THE PASSAGE'S ACTUAL SUBJECT, NOT A VAGUE OR MERELY ADJACENT TOPIC.
+- IF THE PASSAGE HAS NO CLEAN, NAMEABLE SUBJECT TO ASK FOR — IT IS MOSTLY PLOT ACTION, MOVEMENT, OR DIALOGUE WITH NO DESCRIBABLE SCENE; OR AN ABSTRACT REFLECTION NO "DESCRIBE X" WOULD ELICIT; OR THE ONLY FITTING REQUEST WOULD FORCE A BANNED WORD OR A COPIED PHRASE — OUTPUT EXACTLY: [UNSUITABLE]. WHEN IN ANY DOUBT, PREFER [UNSUITABLE]; A DROPPED PASSAGE COSTS NOTHING, A FORCED REQUEST POISONS TRAINING.
+
+Output ONLY the one-sentence request, OR exactly [UNSUITABLE]. Nothing else — no preamble, no quotes, no explanation.
+
+Passage:
+__PASSAGE__

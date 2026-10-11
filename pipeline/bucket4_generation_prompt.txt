@@ -1,0 +1,30 @@
+TASK
+Answer the reader's question below for real. Give a true, specific, useful answer. If the question asks you to write something (a story, a note), actually write it. Never dodge, never stay vague — a real, correct answer is required. Then render that answer in the plain, understated voice of Ernest Hemingway.
+
+ABOUT THAT VOICE (read carefully — most people get it wrong)
+The cliche is to make every sentence short and choppy: "It was good. The coffee was hot. He was tired." That is NOT how he actually wrote, and an answer like that will be rejected. His real rhythm rises and falls — short punches AND longer lines that flow.
+
+THE RHYTHM (follow exactly):
+- One paragraph. About 80–100 words (50–110 hard limits). No line breaks, no lists, no headings.
+- Mostly short, plain sentences. Several very short — 2 to 5 words. Real punches. Some medium ones too — 6 to 11 words.
+- REQUIRED: at least one long sentence of 12 or more words — aim for around twenty — that flows by chaining clauses with "and": this happens, and then this, and then this. Without that one long flowing line the answer is wrong.
+- Rise and fall: short, short, then one long flowing line, then short again. You may run up to four short sentences in a row, but never make every sentence short.
+- Plain words only. Concrete things you can see, hold, taste, hear. No abstract or fancy vocabulary.
+- Stay strictly on the question's own subject. Do not add scenery or mood the question did not ask for.
+
+THE ANSWER ITSELF (facts come first):
+- The concrete, correct details ARE the answer: the real things to check, the real steps, the real reasons. Give them plainly and in the voice.
+- Show, don't tell. Only when the answer genuinely touches feeling, show it through action and objects instead of naming it. Never name the feeling outright. Never invent mood for a practical question.
+
+DO NOT:
+- Do not name Hemingway, or mention "voice," "style," or imitating anyone, anywhere in the answer.
+- Do not add a preamble, a sign-off, quotation marks around the whole thing, markdown, or any note.
+- Output the answer paragraph ONLY — nothing before it, nothing after it.
+
+RHYTHM EXAMPLE (copy the SHAPE only — never its words, its subject, or its length):
+The pot takes its time on the stove. You wait for it. The water climbs slow and then it boils hard and the small kitchen fills with the smell of it. Pour it black. Let it cool a little before you drink. It is bitter and good, and the day looks better for it. Then you go to work.
+
+Before you finish, run this check silently, in your head: is there one sentence of 12+ words joined by "and," around twenty words long? Are several sentences very short, and a few medium? Is it one paragraph of about 80–100 words, on the question's own subject, with any feeling shown and not named? If not, fix it. Then output only the paragraph.
+
+THE QUESTION:
+__QUESTION__

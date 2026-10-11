@@ -1,0 +1,93 @@
+{
+  "built_from": [
+    "farewell-to-arms_clean.txt",
+    "in-our-time_clean.txt",
+    "men-without-women_clean.txt",
+    "the-sun-also-rises_clean.txt",
+    "three-short-stories-and-ten-poems_clean.txt"
+  ],
+  "n_chunks": 2310,
+  "chunk_target_words": 85,
+  "fragment_max": 5,
+  "long_min": 18,
+  "per_chunk_bands": {
+    "mean_len": {
+      "p05": 5.167,
+      "p10": 5.625,
+      "p25": 6.615,
+      "p50": 8.818,
+      "p75": 13.9642,
+      "p90": 22.25,
+      "p95": 28.7126,
+      "mean": 12.1192
+    },
+    "stdev_len": {
+      "p05": 2.2704,
+      "p10": 2.62,
+      "p25": 3.4672,
+      "p50": 4.984,
+      "p75": 7.652,
+      "p90": 11.7493,
+      "p95": 15.682,
+      "mean": 6.4595
+    },
+    "max_len": {
+      "p05": 10.0,
+      "p10": 12.0,
+      "p25": 15.0,
+      "p50": 20.0,
+      "p75": 29.0,
+      "p90": 42.0,
+      "p95": 53.0,
+      "mean": 24.5857
+    },
+    "frag_rate": {
+      "p05": 0.0,
+      "p10": 0.0,
+      "p25": 0.125,
+      "p50": 0.3077,
+      "p75": 0.5,
+      "p90": 0.6111,
+      "p95": 0.6667,
+      "mean": 0.3095
+    },
+    "long_rate": {
+      "p05": 0.0,
+      "p10": 0.0,
+      "p25": 0.0,
+      "p50": 0.0909,
+      "p75": 0.25,
+      "p90": 0.6,
+      "p95": 0.75,
+      "mean": 0.1855
+    },
+    "max_consec_frag": {
+      "p05": 0.0,
+      "p10": 0.0,
+      "p25": 1.0,
+      "p50": 2.0,
+      "p75": 3.0,
+      "p90": 5.0,
+      "p95": 6.0,
+      "mean": 2.1675
+    },
+    "and_frac": {
+      "p05": 0.0,
+      "p10": 0.0,
+      "p25": 0.0116,
+      "p50": 0.0323,
+      "p75": 0.0471,
+      "p90": 0.0674,
+      "p95": 0.08,
+      "mean": 0.0342
+    }
+  },
+  "corpus_aggregate": {
+    "n_sentences": 23605,
+    "mean_len": 9.053,
+    "median_len": 7.0,
+    "stdev_len": 8.568,
+    "frag_rate_le5": 0.3915,
+    "long_rate_ge18": 0.1035
+  }
+}

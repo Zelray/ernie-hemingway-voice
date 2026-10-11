@@ -1,0 +1,36 @@
+{
+  "reviewed": 682,
+  "shards": 8,
+  "flagged": 29,
+  "hard": [
+    {
+      "id": "b4_cw_00001",
+      "mode": "pastiche",
+      "reason": "bare write-a-short-story -> full Old-Man-and-the-Sea"
+    },
+    {
+      "id": "b4_cw_00011",
+      "mode": "pastiche",
+      "reason": "bare tell-me-a-story -> old man by the river"
+    },
+    {
+      "id": "b4_oq_00417",
+      "mode": "hallucinated_fact",
+      "reason": "World Cup 32 teams (is 48 as of 2026)"
+    }
+  ],
+  "soft_hallucinated_dropped": [
+    {
+      "id": "b4_gq_00034",
+      "mode": "hallucinated_fact",
+      "reason": "false most-deaths Shakespeare claim"
+    },
+    {
+      "id": "b4_gq_00376",
+      "mode": "hallucinated_fact",
+      "reason": "golf: aim-left mislabeled as closed stance"
+    }
+  ],
+  "soft_pastiche_kept": 24,
+  "note": "24 soft pastiche flags KEPT (within diversity bounds, on-brand, no gold-plating). Pastiche=M2 watch item."
+}

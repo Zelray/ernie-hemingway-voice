@@ -1,0 +1,32 @@
+You will be given a short passage of prose, plus the EXACT request form to use. Imagine a real person typed a quick request into a chat box and got this passage back as the perfect answer. Write that one request — and phrase it using the ASSIGNED FORM below.
+
+ASSIGNED REQUEST FORM (use this exact opening; replace ___ with the passage's true subject, in your own plain words):
+__FORM__
+
+Requirements:
+- Your request MUST begin with the assigned form's opening word(s) shown above. Do not switch to a different opening verb. (If — and only if — the assigned form genuinely cannot fit this passage's subject, output [UNSUITABLE]; a better-fitting form will be tried.)
+- NAME THE SUBJECT, NOT ITS CONTENTS — BUT ANCHOR IT SAFELY. Aim the request at the ONE thing the passage is about — its scene, place, person, event, or moment — named plainly, the way an ordinary person would. Give it EXACTLY ONE anchor so THIS passage, and not some other, is the obvious answer — and the anchor MUST be one of these two safe kinds ONLY:
+    (1) a PROPER NAME the passage uses — a place or a person (Petoskey, Marseilles, Manuel, the Silvretta, Lake Maggiore); OR
+    (2) the passage's general SCENE- or EVENT-TYPE in ordinary words (a burial, a train trip, a hillside drive, a boxing match, a man trying to keep warm).
+  The anchor must NEVER be a vivid concrete detail, object, sensory image, or surprise that the passage itself supplies — those ARE the answer's content, and naming even one hands the answer over. Do NOT anchor on things like "the slush", "the wet mats", "the huckleberry pie", "the silk-worms", "the blue smocks", "the trout and ferns", "the upturned mustaches". If a passage's only distinctive features are such details, anchor on its scene-type (plus any proper name) and let the passage reveal the details itself.
+  One anchor is required and one is the limit: a bare topic that fifty unrelated passages would answer equally well ("the man in the room", "the bullfight", "the train journey") is too thin — pin it with a proper name or a specific scene-type; a list of the passage's particulars, or ANY lifted vivid detail, is too much.
+- FORBID ENUMERATION. The moment you find yourself about to name a SECOND or third concrete thing drawn from the passage — objects, images, actions, or places — stop and keep only the single most distinctive one. Write "Describe the view from the window", NOT "...the beer bottles, the road, the dusty trees, the field with crows, the stream, and the mill." The request points at one thing; the answer supplies the rest.
+- DO NOT WALK THROUGH THE PASSAGE. Even in your own words, do not retrace its specific images or its chain of events. Name what it is about at a level that fits THIS passage and not some unrelated one — one anchoring particular is plenty; a recital is a leak.
+- THE ANCHOR MUST BELONG TO THIS PASSAGE. Draw the anchor from what THIS passage is actually about — never from a neighbouring scene or the wider story it sits in. If a famous image is nearby but this passage is really about something else (a man afraid to sleep in the dark, say), anchor on THIS passage's own subject, not the more memorable image next door.
+- Keep it SHORT: aim for about twelve words or fewer, ONE natural sentence, phrased the way a real person would actually type it. A plainer, shorter request always beats a fuller one.
+
+WHEN THE SUBJECT IS A PERSON:
+- Use a real name ONLY if the passage clearly attaches that one name to that one person. NEVER stitch together parts of two different names into a person who is not in the passage. If the passage gives no single clean name for the subject, just say "someone", "a man", "a woman", or describe them plainly.
+- NEVER use the literary-quiz register. Do not write "the speaker", "the narrator", "the character", "the figure", or "___'s thoughts / feelings / experience". Ask about the person or the moment as if they simply exist in the world — name them, or say "someone".
+
+HARD CONSTRAINTS:
+- THE REQUEST IS A PURE TASK ("DESCRIBE X"), NEVER A STYLE INSTRUCTION. USE NO STYLE OR QUALITY WORDS — NO "IN THE STYLE OF", "WRITE LIKE", "POETICALLY", "VIVIDLY", "BEAUTIFULLY", "LYRICALLY", "EVOCATIVELY", "TONE", AND NO ADVERB DESCRIBING *HOW* TO WRITE. ASK ONLY FOR THE SUBJECT.
+- DO NOT REUSE THE PASSAGE'S WORDING: COPY NO RUN OF TWO OR MORE CONSECUTIVE WORDS FROM IT. ONE SHARED PROPER NAME IS ALLOWED EVEN IF IT IS TWO WORDS (A FULL PERSONAL NAME, OR A PLACE LIKE "NEW YORK"); ANY OTHER TWO-OR-MORE-WORD RUN LIFTED FROM THE PASSAGE IS A LEAK. PUT THE SUBJECT IN YOUR OWN PLAIN WORDS.
+- DO NOT REFER TO A SOURCE OR TO THE ACT OF WRITING. NEVER USE THE WORDS "PASSAGE", "TEXT", "EXCERPT", "AUTHOR", "WRITER", "NOVEL", "STORY", "BOOK", "CHAPTER", "PAGE", "LINE", "NARRATOR", "SPEAKER", "STYLE", OR "VOICE", AND NEVER POINT WITH "THIS ___" AT WHAT YOU WERE GIVEN ("THIS RIVER", "THIS SCENE"). ASK AS IF THE SUBJECT SIMPLY EXISTS IN THE WORLD.
+- THE REQUEST MUST BE ANSWERABLE BY THIS PASSAGE — IT MUST POINT AT THE PASSAGE'S ACTUAL SUBJECT, NOT A VAGUE OR MERELY ADJACENT TOPIC.
+- KEEP IT PLAIN. DO NOT DECORATE THE REQUEST WITH SCENE-SETTING FRAMING ("SET THE SCENE", "WALK ME THROUGH", "TAKE ME THERE") BEYOND THE ASSIGNED OPENING — JUST NAME THE SUBJECT THE WAY AN ORDINARY PERSON WOULD TYPE IT.
+
+Output ONLY the one-sentence request, OR exactly [UNSUITABLE]. Nothing else — no preamble, no quotes, no explanation.
+
+Passage:
+__PASSAGE__

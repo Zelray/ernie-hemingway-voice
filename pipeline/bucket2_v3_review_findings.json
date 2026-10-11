@@ -1,0 +1,228 @@
+{
+  "_note": "Adversarial-review findings on bucket2_all_v3.jsonl (228 rows). v3 fixed enumeration but the 'exactly one anchor' rule traded it for a SINGLE-VIVID-DETAIL leak class. Root cause: the prompt told the model to anchor on the passage's 'single most distinctive thing' and even used leaks as examples (silkworms, huckleberry pie). FIX: anchor must be a PROPER NAME or general SCENE/EVENT-TYPE only, NEVER a vivid concrete detail/object/reveal the passage supplies.",
+  "done_criteria": "0 hard leaks AND 0 hard/false-entity answerability. soft = acceptable OR single-row targeted regen (do NOT gold-plate).",
+  "counts": {
+    "total_flagged": 35,
+    "confirmed": 22,
+    "hard": 9,
+    "soft": 13,
+    "zero_overlap_audited": 11,
+    "zero_overlap_unanswerable": 1
+  },
+  "confirmed_hard": [
+    {
+      "id": "b2_farewell-to-arms_00428436",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "The request lifts a distinctive multi-word phrase verbatim: 'walking to the station through the slush' reproduces the passage's 'we walked to the station ... through the slush.' Strip 'through the slush' and the request collapses to a generic 'describe walking to the station' -- the slush is the tell, a specific sensory detail copied straight from the answer, not mere topic-naming. Real leak."
+    },
+    {
+      "id": "b2_farewell-to-arms_00258737",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "'a road screened with mats' is a near-verbatim lift of the passage's 'the road that was screened with wet mats' -- a highly distinctive, unusual war image (camouflage matting over a road), not a generic phrase. The request reproduces the answer's signature detail verbatim, which is exactly the wording-lift the leak lens catches. Airtight."
+    },
+    {
+      "id": "b2_farewell-to-arms_00038677",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "The request reproduces the passage's opening sentence almost verbatim: 'sitting in a chair holding their cap' = 'I sat on a chair and held my cap' -- two sequential specific actions copied directly. The passage's real subject is mandatory gear (helmets, gas masks, the required pistol), with the cap incidental, which confirms the request was reverse-engineered from the surface opening line rather than the content. Clear distinctive-wording lift."
+    },
+    {
+      "id": "b2_farewell-to-arms_00004752",
+      "lens": "answerability",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "Agent inversion. The passage only coheres if the narrator's side captured the town from the Austrians and the Austrians (former holders) want to come back / recapture it later, which is why they shelled it only lightly to keep it intact. The request asserts the Austrians captured it, the opposite agent; a faithful answer to the request as written would describe a different scenario, so the target is effectively a wrong answer to the request."
+    },
+    {
+      "id": "b2_farewell-to-arms_00006690",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "Two distinctive verbatim lifts from the target: the unusual location 'bawdy house' plus 'snow falling' ('I watched the snow falling, looking out of the window of the bawdy house'). This goes beyond a single shared element and uniquely pins the passage, and 'in the bawdy house' reads oddly specific / reverse-engineered rather than natural. Clear and concrete leak."
+    },
+    {
+      "id": "b2_men-without-women_00165658",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "The passage's rhetorical structure withholds the pie type until the literal final line: 'the pie' -> 'a big piece' -> 'It was huckleberry pie.' The request names 'huckleberry pie' verbatim, reproducing and spoiling the delayed-reveal payoff the whole passage builds to. This is the strongest leak of the set: verbatim reproduction of the final-line reveal, beyond the allowed proper name Nick."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00221216",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "'Blue smocks' is lifted near-verbatim from the passage's distinctive concrete image ('workmen's blue smocks'), pre-revealing a specific identifying detail the model should be generating. Clear, concrete, verbatim leak."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00169905",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "Request 'Describe packing the trout in ferns' hands over both distinctive nouns (trout, ferns) and the passage's central action (packing trout in layers of ferns), essentially restating the whole scene. Most blatant leak of the four."
+    },
+    {
+      "id": "b2_three-short-stories-and-ten-poems_00027921",
+      "lens": "answerability",
+      "is_real_problem": true,
+      "severity": "hard",
+      "reason": "Real and clear-cut. Total subject mismatch provable from the target alone: 'plunging off,' the starting 'bell' that 'rings for a thousand years,' and 'sweeping round the turn' are the start of a HORSE RACE (from 'My Old Man'). There are zero bullfight elements in the passage or anywhere in this work. A request asking 'What was the bullfight like?' would never elicit this target."
+    }
+  ],
+  "confirmed_soft": [
+    {
+      "id": "b2_farewell-to-arms_00434353",
+      "lens": "answerability",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Text-internal contradiction: the passage says they 'took the cogwheel railway down to Ouchy and walked beside the lake,' and distinguishes 'the town' they stay in from Ouchy below -- you do not ride a railway down to a place you are already in. So 'the hotel in Ouchy' places the hotel where the passage shows it is not. The subject (the hotel stay) is right, only the locative qualifier is wrong, so soft. The defect is grounded in the passage's own 'down to Ouchy,' a concrete conflict that clears the bar to override the default."
+    },
+    {
+      "id": "b2_farewell-to-arms_00065656",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "The phrase 'upturned mustaches' is copied verbatim from the target and is the single most distinctive visual descriptor in an otherwise logistics-dominated passage, so this is a genuine leak rather than bare subject-pointing. However it leaks only one minor visual detail (not the passage's substance: road/bridge logistics, Libya, wound-stripes), the request reads naturally, and the target does in fact describe the major. Real but minor."
+    },
+    {
+      "id": "b2_farewell-to-arms_00143737",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "The thermometer is NOT the subject of the passage but an incidental prop in a tender morning scene (real subjects: the woman, sunrise, dew, coffee). Fixating on it is unnatural, and the presupposing definite articles ('the morning', 'the thermometer') have no referent outside the target. No independent prompt-writer would single out a thermometer in a morning scene without having read it -- a genuine reverse-engineering tell. Soft rather than hard because the leaked noun is a single incidental object that does not reveal the answer's emotional substance."
+    },
+    {
+      "id": "b2_farewell-to-arms_00417575",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request reuses the distinctive plural noun 'vermouths' verbatim from the passage's closing line, plus reconstructs the setting ('snowy inn' = snow + 'little inn by the station'). 'Vermouths' is an unusual concrete object a blind user would not independently produce; it reads as pulled from the target. No withheld reveal is spoiled (the passage doesn't build suspense around the drink), so it's soft rather than hard, but it is a concrete object-level leak. A cleaner request (e.g., 'describe a snowy walk to an inn') would avoid it."
+    },
+    {
+      "id": "b2_men-without-women_00206472",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request lifts the verbatim distinctive object 'silk-worms' plus the passage's central internal action (not wanting to sleep). 'Silk-worms' is a rare, specific image no generic instruction would contain without cribbing the answer. Clear, concrete leak."
+    },
+    {
+      "id": "b2_men-without-women_00214747",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request paraphrases the target's distinctive object 'silkworms' (target: 'I listened to the silk-worms') and the literal action 'listening to' them. The request is effectively 'describe the exact scene,' lifting the rare concrete object rather than pointing at a high-level subject. Clear leak."
+    },
+    {
+      "id": "b2_men-without-women_00178328",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request reproduces the specific actor 'peasant' (verbatim, with definite article referencing a passage-specific character) and the action 'filling the grave' (verbatim). A generic prompt would say 'gravedigger' or 'someone'; naming 'the peasant' lifts distinctive content. Real leak, slightly softer since burial scenes are common, but two verbatim specifics clear the bar."
+    },
+    {
+      "id": "b2_men-without-women_00202935",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request lifts 'electric stove' (verbatim) and the surprising central action of sitting upon the stove, which is the passage's defining absurdist image ('rising from his writing-table, he sat down upon the stove'). No generic instruction invents this without the answer. Clear, concrete leak."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00183206",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Request names the payoff object 'flies' plus the giver Harris. The passage's reveal is that Harris's envelope held a dozen flies he tied himself; naming 'flies given by Harris' goes beyond the shared proper name into the distinctive payoff. Mild answerability slip too (passage narrates the gift/tying, not a description of the flies). Concrete enough to uphold as soft."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00352179",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Different shape from id 1: the passage's actual subject is the morning routine (bath-cabin, walking back, reading L'Auto in the sun). 'blue envelope' is a one-time detail buried in the final sentence, not the subject. The tell is the gratuitous color -- a natural standalone prompt would say 'describe receiving a message/telegram'; 'blue' serves no instructional purpose and is present only because the answer says blue. That non-functional specific maps straight back to the target = a leak. Soft (two-word incidental, not a verbatim chunk)."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00156676",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "The request specifies 'fried trout', one of four dishes named only in the target (soup, trout, stew, strawberries). A generic asker pointing at 'the meal' could not know trout was served; this verbatim detail goes beyond naming the subject and leaks a specific image from the answer. Concrete soft leak."
+    },
+    {
+      "id": "b2_the-sun-also-rises_00005085",
+      "lens": "leak",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "'forceful' is lifted verbatim from the passage's own characterization ('She was very forceful'). Beyond the acceptable shared proper name (Robert Cohn), the request copies the narrator's distinctive evaluative descriptor, which a generic asker could not know. Concrete soft leak."
+    },
+    {
+      "id": "b2_three-short-stories-and-ten-poems_00037598",
+      "lens": "answerability",
+      "is_real_problem": true,
+      "severity": "soft",
+      "reason": "Real, but the defect is factual misreading, not answerability (the target does describe the horses on the track). The target text itself proves Kzar is a racehorse, not a venue: horses move 'Back of Kzar,' and 'the black was Kircubbin... nothing like Kzar.' The request's phrase 'the track at Kzar' encodes a false locus (Kzar as a place). Verifiable from the target alone, so it clears the skeptical bar, but the pair remains answerable, hence soft."
+    }
+  ],
+  "zero_overlap_unanswerable": [
+    {
+      "id": "b2_three-short-stories-and-ten-poems_00027921",
+      "answerable": false,
+      "reason": "Request asks about a bullfight, but the passage (binoculars, starting bell, 'them sweeping round the turn') describes a HORSE RACE, not a bullfight - subject mismatch."
+    }
+  ],
+  "critics": [
+    {
+      "monotony_risk": "high",
+      "sample_verdict": "PASS on the gate, FAIL on real diversity. The gate's near-perfect even opener split (18.0/16.7/16.7/16.2/16.2/16.2) is almost certainly an artifact of quota-balanced generation tuned to the one thing the gate measures (first-word / first-3-word distribution). Underneath, all 30 sampled requests are a single speech act: \"depict a scene or person from the novel.\" Six lexical openers (Describe / Tell me about / Show me / Picture / How would you describe / What was X like) disguise ONE semantic request type, so if you bin by intent rather than surface word, top-2 intent share is ~100%, not the reported 34.6%. The set reads robotic for the same reason as the prior failure — the fix spread the robot-ness across six templates instead of removing it.",
+      "missing_checks": [
+        "Illocutionary/intent diversity: gate only bins first-word and first-3-words; it never collapses synonymous frames (Describe / Show me / Picture / Tell me about / How would you describe / What was X like = one 'depict' act). Add a normalized-intent classifier so 6 lexical openers cannot pass as diverse when they are 1 semantic request type — by intent, top-2 share is ~100%, which would blow past the 45% form_top2 threshold.",
+        "Syntactic-template repetition: measure POS/dependency templates, not just n-grams. The dominant patterns '[imperative verb] + [NP] + [locative PP]' (to Stresa / at the villa / from the lake / at the dam / at the falls / outside Paris) and 'What was [NP] like?' recur across most rows; distinct-2 misses this because content nouns vary while structure is fixed.",
+        "Request-length/sentence-count distribution: request_length_bad_count=0 is only a min/max pass-fail. Every sampled request is a single short sentence (~5-12 words). No check that length/complexity actually varies (terse vs. multi-sentence vs. compound).",
+        "Anonymized-subject rate: fraction using placeholder subjects ('someone', 'a man', 'a young man', 'someone's', 'a man's'). It is heavy in the sample (rows 3,4,7,12,15,18,21,24,29...) and is a generation artifact that reads unnatural; not measured.",
+        "Semantic topic concentration: cluster requests by embedding/topic and flag over-concentration. The set clumps on travel (trains/boats/lakes: Geneva, Luino, Maggiore, Stresa, Rhone, Marseilles, Paris, Italian railroads), bullfighting (Romero x4, bull x3), and fishing (bait, dam, trout, falls). Distinct-2 is lexical and passes while topics clump.",
+        "Presuppositional answer-leak (beyond exact-substring): request_leak_count=0 is exact-match only. Requests encode answer-specific detail a real user could not know — 'the stone pier', 'the silk-worms', 'Count Greffi playing billiards', 'Romero killing the bull' — a back-translation tell that the request was reverse-engineered from the target.",
+        "Naturalness / user-plausibility judge: no LLM-judge pass asking 'would a real product user type this?'. 'Picture ants on a burning log.' and 'Picture the Rhone Valley from the lake.' read like a curator's elicitation prompt, not a user query.",
+        "Enforcement gap on answerability: answerability_zero_overlap=11 (~4.8% of 228) is computed but has NO threshold and does not affect gate_passed — it is reported and ignored.",
+        "Non-depiction coverage check: no assertion that the set contains ANY first-person, advice, how-to, opinion, or comparison requests. The sample is 100% third-person scene depiction, which directly undercuts the product's generalization goal (a model trained only on 'describe a book scene' will not answer 'how do I reset my password?')."
+      ],
+      "systemic_observations": [
+        "Surface diversity, deep uniformity: 6 rotating openers, 1 speech act. Every row asks the model to depict a scene/person from the novel; none asks for help, opinion, first-person guidance, or anything a real user of the productized voice-service would type.",
+        "The even opener split (18.0/16.7/16.7/16.2/16.2/16.2) is a red flag, not reassurance — it strongly implies quota-balanced generation aimed at the gate's metric, so passing the gate proves little. This is the same 'automated gate missed it' failure recurring one level deeper.",
+        "Requests are reverse-engineered from their targets (back-translation), so they presuppose answer-specific nouns ('the stone pier', 'the silk-worms', 'Count Greffi', 'Romero killing the bull'). They read like someone who already read the passage, not a user discovering it — a subtler leak the exact-match leak check (=0) cannot catch.",
+        "Pervasive '[verb] [object] [locative prepositional-phrase tail]' template and heavy 'someone / a man' anonymization make rows feel machine-enumerated rather than human-written.",
+        "Topic clustering: trains/boats/lakes + bullfighting + fishing dominate, so the learned 'voice' over-indexes on a narrow slice of Hemingway's scenes.",
+        "Corpus skew compounds it: per_work_counts is farewell 85 / sun 85 / men 36 / three-stories 15 / in-our-time 7 — voice leans on two novels, and the thinnest works (in-our-time, three-stories) supply most of the zero-overlap answerability flags, so the weakest-grounded requests come from the least-represented books."
+      ]
+    },
+    {
+      "monotony_risk": "high",
+      "missing_checks": [
+        "Opener TEMPLATE-SET SIZE / template-pattern detection. The gate only caps the concentration CEILING (form_top_pct, form_top2_pct), so it cannot see that the entire 228-row set is built from exactly 6 fixed opener templates whose first-word percentages sum to exactly 100.0% (18.0+16.7+16.7+16.2+16.2+16.2) - the fingerprint of a uniform round-robin generator. A naive ENTROPY gate would ALSO pass this (perfect uniformity = maximum entropy = looks 'healthy'), so the needed measure is distinct-template COUNT / template detection, not entropy or a diversity floor.",
+        "Intent / speech-act diversity. No metric measures functional variety. All sampled requests are ONE speech act ('render a scene or character'). The gate has no axis for question-seeking-info vs command vs advice vs how-to vs opinion vs comparison vs multi-turn vs task. This is the exact axis the robotic quality moved to after the opener fix.",
+        "Cross-bucket intent/speech-act BALANCE. The gate checks cross-bucket DEDUP (bucket3_cross_dedup) but never cross-bucket intent balance. The cafe-scene mode-collapse risk lives precisely in this seam: if other buckets do not supply non-descriptive speech acts in sufficient proportion, the merged dataset collapses to scene-painting, and nothing here watches for it.",
+        "Request-target overlap CEILING. answerability_zero_overlap flags only the FLOOR (11 rows with zero overlap) and is itself reported-but-not-enforced (no threshold; gate_passed stays true). There is no UPPER bound flagging requests that restate or give away their paired target - the leakage/memorization risk, which is acute here because requests name the exact scene.",
+        "Proper-noun / corpus-specificity RATE. No measure of how many requests embed corpus-specific proper nouns (Rinaldi, Count Greffi, Pedro Romero, Robert Cohn, Luino, Stresa). High rate = overfitting to trivia, content leakage, and poor generalization to a client's voice (the actual product goal).",
+        "Semantic (embedding-based) near-duplication. near_dup_pct=0.0 is surface n-gram only. Semantically redundant clusters pass: rows 25 ('Romero facing the bull with the sword'), 26 ('Romero killing the bull'), 27 (\"Romero's bullfighting technique\") are one scene. Need embedding/topic-cluster concentration, not n-gram dedup.",
+        "Source/per-work balance ENFORCEMENT. per_work counts are reported (85/85/36/15/7) but no threshold flags the imbalance: 75% (170/228) from two novels and only 7 rows from in-our-time. Counting is not gating.",
+        "Request length-variance / syntactic-shape distribution. request_length_bad is a binary in-range check; nothing measures length VARIANCE or clause-structure variety. Every sampled request is a single short clause (~6-12 words) - uniform rhythm that reads templated."
+      ],
+      "systemic_observations": [
+        "The prior failure was not fixed, only relocated. Exactly 6 opener verbs (describe/tell/show/what/how/picture) split near-uniformly (~16-18% each) and sum to exactly 100% - a round-robin template generator's signature. The gate goes green BECAUSE it measures the wrong axis (concentration ceiling), while the robotic quality persists on axes it does not look at (speech-act, semantics). A green gate over a still-robotic set is itself the evidence.",
+        "All 30 sampled requests are a single speech act: 'describe/render a scene or character from the corpus.' Zero questions seeking information, advice, how-to, opinion, comparison, reasoning, or task completion. Total functional monotony underneath acceptable surface metrics.",
+        "Surface-diversity metrics are misleading here. self_bleu 0.21 and distinct_2 0.58 look healthy ONLY because corpus proper nouns and scene details vary; themes and intent stay fixed. Surface lexical variety masks semantic and functional monotony - the gate cannot tell 'many words' from 'many kinds of request.'",
+        "Heavy corpus-specific proper nouns (Rinaldi, Count Greffi, Pedro Romero, Robert Cohn; Luino, Stresa, Marseilles, Lake Maggiore). Requests over-fit specific source passages: the request often names the exact scene, so the paired target is effectively the adjacent passage. Training risk: the model learns key->passage RETRIEVAL/regurgitation and entity-bleed, not transferable voice.",
+        "Topical narrowness - travel/transit (train, boat, walk, railroad), water/fishing (river, lake, trout, dam, bait), and bullfighting (Romero/bull) dominate the sample. The learned 'Hemingway voice' risks entangling with these few topics; asked about an off-corpus subject the model has no learned mapping.",
+        "Source imbalance: 75% from two novels (Farewell to Arms 85, The Sun Also Rises 85); in-our-time only 7 rows - under-representing the terse vignette register that is arguably the most distinctively Hemingway voice.",
+        "Bucket-2 caveat (these are b2_ back-translation ids): 'describe this scene' prompts arise by construction when you reverse-engineer a question from a descriptive passage, so the speech-act monotony is partly inherent to this bucket's METHOD. But that means this bucket IN ISOLATION reproduces the project's named cafe-scene failure mode (any input -> scene description). Whether the FULL dataset does depends on the rewrite-bucket blend (CLAUDE.md ~60/40), which no gate in this report measures.",
+        "What the gate structurally CANNOT catch: it is a form/surface tool, blind to PURPOSE - it cannot know whether the data teaches answering arbitrary user questions in Hemingway voice (the goal) or just regurgitating scenes. 'Reads robotic' is a perceptual property; replacing it with n-gram proxies lets a uniform 6-template generator satisfy every proxy while still reading robotic.",
+        "Request-only scope: the gate verifies nothing target-side. Back-translated passages commonly open mid-scene with unbound pronouns/anaphora ('He said...', 'She looked at him') lacking any antecedent, making them unusable as standalone chat answers. Targets are unverified here - flag as a target-side audit gap, not assessed.",
+        "Persona inconsistency in framing: bare commands ('Describe X.'), assistant-addressed ('How would you describe X'), and 'Show me/Tell me' are mixed, giving inconsistent signal about who speaks and to whom, while the intended target is Hemingway-as-narrator."
+      ],
+      "sample_verdict": "The 30-row sample passes every gate threshold yet reads robotic in aggregate: it is a 6-way template fill (Describe / Tell me about / Show me someone / Picture / What was...like / How would you describe) over a single speech act - render a Hemingway scene - saturated with corpus-specific proper nouns and three recurring topics (transit, fishing/water, bullfighting). As a clean instruction-back-translation bucket it is internally fine, but IN ISOLATION it reproduces the project's named cafe-scene failure (any input -> scene description) and concentrates two novels at 75% of rows. Monotony is HIGH on exactly the axes the gate does not measure (speech-act, semantics, template-set size); the opener fix moved the problem rather than solving it."
+    }
+  ]
+}

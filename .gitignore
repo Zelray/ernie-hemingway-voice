@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────
+# Ernie — Hemingway voice fine-tune
+# Secrets, copyrighted material, model weights, and internal
+# project docs never enter the public repo.
+# ─────────────────────────────────────────────────────────────
+
+# --- SECRETS — never commit ---
+gemini_key.txt
+*.key
+.env
+*.env
+*.local.ps1
+
+# --- Model weights & big archives (private HuggingFace / USB, not git) ---
+ernie_local/
+*.safetensors
+*.gguf
+*.bin
+*.zip
+
+# --- Copyrighted material — do not distribute ---
+oldmansea.pdf
+Hemingway, Ernest/
+
+# --- Internal project docs & working notes (not part of the public repo) ---
+CLAUDE.md
+HANDOFF.md
++MIKES_REPO.md
+logs-*.txt
+cell-*.txt
+Screenshot*.png
+
+# --- Large third-party dataset (fetch separately; see README — Databricks dolly-15k, CC-BY-SA-3.0) ---
+pipeline/dolly-15k.jsonl
+
+# --- Working-data backups, pilots & scratch (kept local only) ---
+pipeline/bucket2_v1_backup/
+pipeline/bucket2_v2/
+pipeline/bucket2_v3_backup_preregen/
+pipeline/bucket2_stale_skip/
+pipeline/bucket4_preprune_backup/
+pipeline/review/
+pipeline/eval/eval_cache/
+pipeline/_*
+*.log
+*pilot*
+
+# --- Internal ops docs & endpoint-specific helpers (not for the public repo) ---
+demo/deploy/
+demo/LAUNCH_PUNCHLIST.md
+demo/DEPLOY_RUNPOD.md
+demo/test_runpod_endpoint.py
+
+# --- Python / OS cruft ---
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db

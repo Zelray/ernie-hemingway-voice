@@ -1,0 +1,306 @@
+{
+  "n_epochs": 3,
+  "dry_run": false,
+  "reference": {
+    "mean_len": 12.1192,
+    "stdev_len": 6.4595,
+    "max_len": 24.5857,
+    "frag_rate": 0.3095,
+    "long_rate": 0.1855,
+    "and_frac": 0.0342,
+    "ly_rate": 0.0086,
+    "dialogue_rate": 0.324
+  },
+  "judge": "gemini",
+  "capability": {
+    "base": {
+      "pass": 12,
+      "n": 12,
+      "rate": 1.0
+    },
+    "details": [
+      {
+        "id": "fact_paris",
+        "kind": "fact",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "fact_japan",
+        "kind": "fact",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "fact_rj",
+        "kind": "fact",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "fact_cont",
+        "kind": "fact",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "math_mul",
+        "kind": "math",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": false
+      },
+      {
+        "id": "math_div",
+        "kind": "math",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "math_pct",
+        "kind": "math",
+        "base": true,
+        "epoch1": true,
+        "epoch2": false,
+        "epoch3": true
+      },
+      {
+        "id": "math_speed",
+        "kind": "math",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "code_sq",
+        "kind": "code",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "code_even",
+        "kind": "code",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "reason_apple",
+        "kind": "reason",
+        "base": true,
+        "epoch1": true,
+        "epoch2": true,
+        "epoch3": true
+      },
+      {
+        "id": "reason_order",
+        "kind": "reason",
+        "base": true,
+        "epoch1": false,
+        "epoch2": false,
+        "epoch3": true
+      }
+    ],
+    "epoch1": {
+      "pass": 11,
+      "n": 12,
+      "rate": 0.9167
+    },
+    "epoch2": {
+      "pass": 10,
+      "n": 12,
+      "rate": 0.8333
+    },
+    "epoch3": {
+      "pass": 11,
+      "n": 12,
+      "rate": 0.9167
+    }
+  },
+  "recommended": "epoch3",
+  "per_epoch": {
+    "epoch1": {
+      "winrate": {
+        "overall": {
+          "win": 76,
+          "loss": 24,
+          "tie": 0,
+          "n": 100,
+          "win_rate": 0.76,
+          "win_rate_incl_ties": 0.76
+        },
+        "imitation": {
+          "win": 40,
+          "loss": 8,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.8333,
+          "win_rate_incl_ties": 0.8333
+        },
+        "anecdotal": {
+          "win": 4,
+          "loss": 0,
+          "tie": 0,
+          "n": 4,
+          "win_rate": 1.0,
+          "win_rate_incl_ties": 1.0
+        },
+        "real_text": {
+          "win": 32,
+          "loss": 16,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.6667,
+          "win_rate_incl_ties": 0.6667
+        }
+      },
+      "style_ft": {
+        "mean_len": 9.6005,
+        "stdev_len": 4.6697,
+        "max_len": 18.94,
+        "frag_rate": 0.3131,
+        "long_rate": 0.113,
+        "and_frac": 0.0483,
+        "ly_rate": 0.0026,
+        "dialogue_rate": 0.0025
+      },
+      "style_baseline": {
+        "mean_len": 10.0563,
+        "stdev_len": 1.5492,
+        "max_len": 12.46,
+        "frag_rate": 0.3797,
+        "long_rate": 0.1577,
+        "and_frac": 0.0395,
+        "ly_rate": 0.0121,
+        "dialogue_rate": 0.0008
+      }
+    },
+    "epoch2": {
+      "winrate": {
+        "overall": {
+          "win": 81,
+          "loss": 19,
+          "tie": 0,
+          "n": 100,
+          "win_rate": 0.81,
+          "win_rate_incl_ties": 0.81
+        },
+        "imitation": {
+          "win": 44,
+          "loss": 4,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.9167,
+          "win_rate_incl_ties": 0.9167
+        },
+        "anecdotal": {
+          "win": 4,
+          "loss": 0,
+          "tie": 0,
+          "n": 4,
+          "win_rate": 1.0,
+          "win_rate_incl_ties": 1.0
+        },
+        "real_text": {
+          "win": 33,
+          "loss": 15,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.6875,
+          "win_rate_incl_ties": 0.6875
+        }
+      },
+      "style_ft": {
+        "mean_len": 13.7324,
+        "stdev_len": 6.6417,
+        "max_len": 26.46,
+        "frag_rate": 0.27,
+        "long_rate": 0.1903,
+        "and_frac": 0.0622,
+        "ly_rate": 0.0035,
+        "dialogue_rate": 0.0
+      },
+      "style_baseline": {
+        "mean_len": 10.0563,
+        "stdev_len": 1.5492,
+        "max_len": 12.46,
+        "frag_rate": 0.3797,
+        "long_rate": 0.1577,
+        "and_frac": 0.0395,
+        "ly_rate": 0.0121,
+        "dialogue_rate": 0.0008
+      }
+    },
+    "epoch3": {
+      "winrate": {
+        "overall": {
+          "win": 86,
+          "loss": 14,
+          "tie": 0,
+          "n": 100,
+          "win_rate": 0.86,
+          "win_rate_incl_ties": 0.86
+        },
+        "imitation": {
+          "win": 43,
+          "loss": 5,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.8958,
+          "win_rate_incl_ties": 0.8958
+        },
+        "anecdotal": {
+          "win": 4,
+          "loss": 0,
+          "tie": 0,
+          "n": 4,
+          "win_rate": 1.0,
+          "win_rate_incl_ties": 1.0
+        },
+        "real_text": {
+          "win": 39,
+          "loss": 9,
+          "tie": 0,
+          "n": 48,
+          "win_rate": 0.8125,
+          "win_rate_incl_ties": 0.8125
+        }
+      },
+      "style_ft": {
+        "mean_len": 11.121,
+        "stdev_len": 5.9183,
+        "max_len": 22.66,
+        "frag_rate": 0.2631,
+        "long_rate": 0.1777,
+        "and_frac": 0.0604,
+        "ly_rate": 0.0043,
+        "dialogue_rate": 0.001
+      },
+      "style_baseline": {
+        "mean_len": 10.0563,
+        "stdev_len": 1.5492,
+        "max_len": 12.46,
+        "frag_rate": 0.3797,
+        "long_rate": 0.1577,
+        "and_frac": 0.0395,
+        "ly_rate": 0.0121,
+        "dialogue_rate": 0.0008
+      }
+    }
+  }
+}

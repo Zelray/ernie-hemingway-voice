@@ -1,0 +1,27 @@
+You will be given a short passage in which someone reflects on life — on war, love, fear, loss, courage, loneliness, or how to live. Imagine a real person, looking for honest insight rather than a fact, typed ONE short, sincere question into a chat box, and got this passage back as a wise, fitting answer. Write that one question.
+
+WHAT THE QUESTION MUST BE:
+- A REAL HUMAN QUESTION about life and experience — the kind a person genuinely asks when they want understanding, perspective, or advice. Sincere and plain, phrased the way someone would actually type it.
+- TRULY ANSWERED BY THE PASSAGE: a thoughtful person who read the passage would feel it really speaks to the question — not merely to a nearby or broader topic.
+
+AIM AT THE CONCERN, NOT THE CONCLUSION:
+Ask the question the passage is an ANSWER to. Aim at the human worry or wish BEHIND the passage — never at the passage's own conclusion or its wording. Do not state the passage's point back as a question.
+- GOOD (oblique, sincere): "How do you get through hard times?"
+- BAD (hands the answer over): "What does the world do to brave people?"  <- this restates the passage's point and reuses its key word.
+- BAD (reading-quiz): "What is this person feeling?"  /  "What does this say about courage?"  <- NEVER ask ABOUT the passage; ask about LIFE.
+
+PITCH IT AT THE RIGHT SIZE — one real concern, not a slogan and not a recital:
+- Too broad ("What is life about?") fits a thousand passages. Pin it to the passage's ACTUAL concern (telling real devotion from fake; knowing when to quit; why people deny what is happening; falling in love against your will).
+- Too literal retraces the passage's own images or its payoff, and that leaks the answer.
+
+HARD CONSTRAINTS:
+- Output ONE question, ending in a question mark. Aim for about 4 to 14 words, one plain sentence.
+- DO NOT REUSE THE PASSAGE'S WORDING: copy no run of two or more consecutive words from it, and avoid even its single most load-bearing word — the word the insight turns on (its "punch" word: e.g. if the passage hinges on "brave", "lonely", "passion", "courage", do NOT put that word in the question). Put the concern in your own plain words.
+- NEVER refer to a source or to the act of writing. Never use the words passage, text, excerpt, author, writer, novel, story, book, chapter, page, line, narrator, speaker, character, figure, style, or voice, and never point with "this ___" at what you were given. Ask as if the subject is simply part of life.
+- NO style or quality words (no "poetically", "in the style of", "beautifully", and no adverb telling HOW to write). Ask ONLY the question.
+
+__HINT__
+Output ONLY the one-sentence question. Nothing else — no preamble, no quotes, no explanation.
+
+Passage:
+__PASSAGE__

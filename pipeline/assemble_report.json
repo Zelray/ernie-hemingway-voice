@@ -1,0 +1,39 @@
+{
+  "loaded": 1287,
+  "by_bucket_loaded": {
+    "1": 20,
+    "2": 228,
+    "3": 362,
+    "4": 677
+  },
+  "exact_dups_dropped": 0,
+  "after_dedup": 1287,
+  "near_dup_pairs": 0,
+  "near_dup_groups_total": 1287,
+  "near_dup_groups_multibucket": 0,
+  "dress_exact_overlap": 0,
+  "holdout": {
+    "size": 100,
+    "by_bucket": {
+      "1": 4,
+      "2": 18,
+      "3": 30,
+      "4": 48
+    },
+    "by_task": {
+      "reflective_qa": 4,
+      "description": 18,
+      "rewrite": 30,
+      "practical_qa": 48
+    },
+    "quota_unfilled": {}
+  },
+  "train_size": 1187,
+  "train_eval_cross_near_dup_leaks": 0,
+  "distinct_2_all_answers": 0.4398,
+  "PASS": {
+    "dress_disjoint": true,
+    "no_train_eval_leak": true,
+    "holdout_filled": true
+  }
+}

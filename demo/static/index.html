@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ernie — the Ernestifier</title>
+<style>
+  :root{
+    --bg:#f4efe6; --panel:#fbf8f1; --ink:#23201b; --muted:#7d7466;
+    --line:#e0d8c8; --accent:#8a5a3b; --accent-soft:#b98c63;
+    --ernie:#3a5a40; --ernie-soft:#dfe9df;
+    --base:#7d6b5d; --base-soft:#ece4da;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(60,45,30,.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+  }
+  header{
+    padding:22px 28px 14px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  }
+  header h1{font-family:Georgia,"Times New Roman",serif;font-size:26px;margin:0;font-weight:600;letter-spacing:.2px}
+  header .tag{color:var(--accent);font-weight:600}
+  header p{margin:0;color:var(--muted);font-size:14px;max-width:640px}
+
+  .wrap{display:grid;grid-template-columns:340px 1fr 1fr;gap:18px;padding:20px 28px 40px;align-items:stretch}
+  @media (max-width:1000px){.wrap{grid-template-columns:1fr}}
+
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:420px;overflow:hidden}
+  .col-head{padding:14px 16px;border-bottom:1px solid var(--line)}
+  .col-head h2{margin:0;font-size:15px;font-weight:700}
+  .col-head .sub{margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+  .col-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:12px}
+
+  /* input column */
+  .modes{display:flex;gap:8px}
+  .mode{flex:1;padding:9px 10px;border:1px solid var(--line);background:#fff;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);text-align:center;transition:.12s}
+  .mode.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .mode small{display:block;font-weight:400;font-size:11px;opacity:.85;margin-top:1px}
+  .voice{display:flex;align-items:center;gap:10px}
+  .vlbl{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);white-space:nowrap}
+  .voice input[type=range]{flex:1;accent-color:var(--accent);cursor:pointer}
+  .vval{font-size:15px;font-weight:700;color:var(--accent);min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+  .vhint{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin:-6px 2px 2px}
+  #seed{flex:1;border:1px solid var(--line);border-radius:7px;padding:6px 9px;font-size:13px;font-family:inherit;background:#fff;color:var(--ink)}
+  #seed:focus{outline:none;border-color:var(--accent-soft)}
+  textarea{width:100%;flex:1;min-height:150px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:14px;font-family:inherit;background:#fff;color:var(--ink)}
+  textarea:focus{outline:none;border-color:var(--accent-soft)}
+  .examples{display:flex;flex-direction:column;gap:6px}
+  .examples .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .chip{text-align:left;border:1px dashed var(--line);background:#fff;border-radius:8px;padding:8px 10px;font-size:12.5px;color:var(--ink);cursor:pointer;transition:.12s}
+  .chip:hover{border-color:var(--accent-soft);background:#fffdf8}
+  .run{margin-top:auto;padding:12px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  .run:disabled{opacity:.5;cursor:default}
+
+  /* output columns */
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-bottom:2px}
+  .badge.ernie{background:var(--ernie-soft);color:var(--ernie)}
+  .badge.base{background:var(--base-soft);color:var(--base)}
+  .out{flex:1;white-space:pre-wrap;font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.62;color:var(--ink);overflow-y:auto}
+  .out.empty{color:var(--muted);font-style:italic;font-family:inherit;font-size:14px}
+  .cursor::after{content:"▍";color:var(--accent-soft);animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .meta{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;min-height:18px}
+  .err{color:#9c3b2e}
+  footer{padding:0 28px 30px;color:var(--muted);font-size:12px;max-width:900px}
+  .info{border:none;background:none;cursor:pointer;font-size:13px;color:var(--accent-soft);padding:0 2px;vertical-align:middle;line-height:1}
+  .info:hover{color:var(--accent)}
+  .modal-bg{position:fixed;inset:0;background:rgba(40,30,20,.45);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
+  .modal-bg.show{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:600px;width:100%;padding:22px 24px;box-shadow:var(--shadow);max-height:82vh;overflow:auto}
+  .modal .x{float:right;border:none;background:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+  .modal h3{margin:0 0 2px;font-size:17px}
+  .modal .msub{margin:0 0 14px;color:var(--muted);font-size:12.5px}
+  .modal pre{white-space:pre-wrap;font-family:Georgia,"Times New Roman",serif;font-size:14.5px;line-height:1.55;background:#fff;border:1px solid var(--line);border-radius:9px;padding:14px;margin:0}
+  .modal .note{margin:13px 0 0;font-size:13.5px;color:var(--ink);line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ernie <span class="tag">— the Ernestifier</span></h1>
+  <p>Same question, two models, side by side. See <strong>fine-tuning beat prompting</strong> — for voice.</p>
+</header>
+
+<div class="wrap">
+  <!-- LEFT: input -->
+  <div class="col">
+    <div class="col-head">
+      <h2>Your text</h2>
+      <p class="sub">Paste something to rewrite, or ask a question.</p>
+    </div>
+    <div class="col-body">
+      <div class="modes">
+        <button class="mode active" data-mode="rewrite">Rewrite<small>your text → the voice</small></button>
+        <button class="mode" data-mode="ask">Ask<small>a question → answered</small></button>
+      </div>
+      <div class="voice">
+        <span class="vlbl">Temp</span>
+        <input type="range" id="temp" min="0.1" max="0.8" step="0.05" value="0.45">
+        <span class="vval" id="tempVal">0.45</span>
+      </div>
+      <div class="vhint"><span>faithful</span><span>poetic</span><span>daring</span></div>
+      <div class="voice">
+        <span class="vlbl">Seed</span>
+        <input type="text" id="seed" placeholder="random — leave blank" inputmode="numeric" autocomplete="off">
+      </div>
+      <textarea id="input" placeholder="" maxlength="4000"></textarea>
+      <div class="examples">
+        <span class="lbl">Try one</span>
+        <div id="chips"></div>
+      </div>
+      <button class="run" id="run">Run both →</button>
+    </div>
+  </div>
+
+  <!-- MIDDLE: Ernie -->
+  <div class="col">
+    <div class="col-head">
+      <span class="badge ernie">FINE-TUNED</span>
+      <h2>Ernie <button class="info" data-info="ernie" title="See the exact system prompt">ⓘ</button></h2>
+      <p class="sub">A compact 3-billion-parameter model trained on Hemingway's public-domain works. Plain system prompt — the voice lives in the weights.</p>
+    </div>
+    <div class="col-body">
+      <div class="out empty" id="ernieOut">Ernie's answer appears here.</div>
+      <div class="meta" id="ernieMeta"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: fair-fight baseline -->
+  <div class="col">
+    <div class="col-head">
+      <span class="badge base">PROMPTED ONLY</span>
+      <h2>Same base model <button class="info" data-info="baseline" title="See the exact system prompt">ⓘ</button></h2>
+      <p class="sub">The identical untrained model, honestly prompted to write like Hemingway as well as a prompt can. A fair fight.</p>
+    </div>
+    <div class="col-body">
+      <div class="out empty" id="baseOut">The baseline's answer appears here.</div>
+      <div class="meta" id="baseMeta"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Both columns run the same Qwen2.5-3B base model on the same hardware. The right column is <em>not</em> a strawman —
+  it gets a strong, honest instruction to imitate Hemingway. A prompt can fake short sentences; only training learns the rhythm.
+</footer>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="x" id="modalX" title="Close">×</button>
+    <h3 id="modalTitle"></h3>
+    <p class="msub" id="modalSub"></p>
+    <pre id="modalPrompt"></pre>
+    <p class="note" id="modalNote"></p>
+  </div>
+</div>
+
+<script>
+const EXAMPLES = {
+  rewrite: [
+    "I am writing to follow up on our meeting last week. I really enjoyed our conversation and I think there are a lot of exciting opportunities for us to work together. Please let me know when you might be available to discuss next steps. I look forward to hearing from you.",
+    "Our revolutionary, best-in-class platform leverages cutting-edge synergies to empower stakeholders and unlock transformative value across the entire customer journey.",
+    "The weather this morning was absolutely gorgeous and breathtaking, with a stunningly beautiful sky and the most wonderful, refreshing breeze you could possibly imagine."
+  ],
+  ask: [
+    "Describe Venice in the summertime.",
+    "Describe the running of the bulls in Pamplona.",
+    "Describe a café in Paris on a rainy morning.",
+    "Describe a trout stream high in the mountains."
+  ]
+};
+const PLACEHOLDER = {
+  rewrite: "Paste an email, a paragraph, anything you've written…",
+  ask: "Ask a question…"
+};
+
+let mode = "rewrite";
+let temp = 0.45;
+const inputEl = document.getElementById("input");
+const tempEl = document.getElementById("temp");
+const tempValEl = document.getElementById("tempVal");
+tempEl.addEventListener("input", ()=>{ temp = parseFloat(tempEl.value); tempValEl.textContent = temp.toFixed(2); });
+const seedEl = document.getElementById("seed");
+const chipsEl = document.getElementById("chips");
+const runBtn  = document.getElementById("run");
+const cols = {
+  ernie: {out:document.getElementById("ernieOut"), meta:document.getElementById("ernieMeta")},
+  baseline: {out:document.getElementById("baseOut"), meta:document.getElementById("baseMeta")}
+};
+
+// system-prompt popup — reads the REAL prompts from the server (no drift)
+let INFO=null;
+fetch("/api/info").then(r=>r.json()).then(d=>INFO=d).catch(()=>{});
+const modalBg=document.getElementById("modalBg");
+function openInfo(which){
+  if(!INFO) return;
+  const d=INFO[which];
+  document.getElementById("modalTitle").textContent = which==="ernie"
+    ? "Ernie — the system prompt we send" : "Baseline — the system prompt we send";
+  document.getElementById("modalSub").textContent = "model: "+d.model;
+  document.getElementById("modalPrompt").textContent = d.system;
+  document.getElementById("modalNote").innerHTML = which==="ernie"
+    ? "<strong>That is the entire instruction.</strong> The Hemingway voice is baked into the model's trained weights — not the prompt."
+    : "<strong>The same base model gets this detailed, honest styling instruction</strong> — a real, strong attempt. This is the fair fight, not a strawman.";
+  modalBg.classList.add("show");
+}
+document.querySelectorAll(".info").forEach(b=>b.onclick=()=>openInfo(b.dataset.info));
+document.getElementById("modalX").onclick=()=>modalBg.classList.remove("show");
+modalBg.onclick=e=>{ if(e.target===modalBg) modalBg.classList.remove("show"); };
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") modalBg.classList.remove("show"); });
+
+function renderMode(){
+  document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("active", b.dataset.mode===mode));
+  inputEl.placeholder = PLACEHOLDER[mode];
+  chipsEl.innerHTML = "";
+  EXAMPLES[mode].forEach(ex=>{
+    const d=document.createElement("button");
+    d.className="chip"; d.textContent = ex.length>90 ? ex.slice(0,90)+"…" : ex;
+    d.title = ex;
+    d.onclick=()=>{ inputEl.value=ex; inputEl.focus(); };
+    chipsEl.appendChild(d);
+  });
+}
+document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;renderMode();});
+
+async function runColumn(target, seed){
+  const {out, meta} = cols[target];
+  out.classList.remove("empty"); out.classList.add("cursor"); out.textContent="";
+  meta.textContent=""; meta.classList.remove("err");
+  const t0 = performance.now();
+  let gotToken=false, warmTimer=null;
+  const warmLabel = target==="ernie" ? "Ernie is waking up" : "Waking the model up";
+  const stopWarming=()=>{ if(warmTimer){ clearInterval(warmTimer); warmTimer=null; } };
+  try{
+    const resp = await fetch("/api/stream",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({target, mode, temperature: temp, seed, text: inputEl.value})
+    });
+    if(!resp.ok){
+      // rate-limited / too-busy / bad-input — the server sends a human message; show it
+      let msg="Something went wrong. Please try again.";
+      try{ const j=await resp.json(); if(j&&j.error) msg=j.error; }catch(_){}
+      meta.classList.add("err"); meta.textContent="⚠ "+msg;
+      return;  // finally cleans up the column
+    }
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf="";
+    while(true){
+      const {done, value} = await reader.read();
+      if(done) break;
+      buf += dec.decode(value,{stream:true});
+      let i;
+      while((i=buf.indexOf("\n\n"))>=0){
+        const chunk=buf.slice(0,i); buf=buf.slice(i+2);
+        if(!chunk.startsWith("data: ")) continue;
+        const data=chunk.slice(6);
+        if(data==="[DONE]") continue;
+        let o; try{o=JSON.parse(data);}catch(e){continue;}
+        if(o.status==="warming"){
+          // cold worker — show a friendly, ticking "waking up" note until tokens arrive
+          const started=performance.now();
+          const tick=()=>{ const s=Math.round((performance.now()-started)/1000); out.textContent=`${warmLabel}… (${s}s)`; };
+          stopWarming(); tick(); warmTimer=setInterval(tick,1000);
+        }
+        else if(o.error){ stopWarming(); meta.classList.add("err"); meta.textContent="⚠ "+o.error; }
+        else if(o.t){
+          if(warmTimer){ stopWarming(); out.textContent=""; }  // first real token clears the counter
+          gotToken=true;
+          out.textContent += o.t; out.scrollTop = out.scrollHeight;
+        }
+      }
+    }
+    const secs=((performance.now()-t0)/1000).toFixed(1);
+    if(gotToken && !meta.classList.contains("err"))
+      meta.textContent = `${out.textContent.trim().split(/\s+/).length} words · ${secs}s · seed ${seed}`;
+  }catch(e){
+    // never render a raw fetch/JSON error to the visitor — log it, show one human line
+    console.error(e);
+    stopWarming();
+    meta.classList.add("err"); meta.textContent="⚠ Something went wrong reaching the model. Please try again.";
+  }finally{
+    stopWarming();
+    out.classList.remove("cursor");
+    if(!gotToken) out.textContent="";  // drop any leftover "waking up" note if nothing streamed
+    if(!out.textContent) { out.classList.add("empty"); out.textContent="(no output)"; }
+  }
+}
+
+async function run(){
+  const text=inputEl.value.trim();
+  if(!text){ inputEl.focus(); return; }
+  const raw=seedEl.value.trim();
+  const runSeed=(raw==="" || isNaN(parseInt(raw,10))) ? Math.floor(Math.random()*1000000000) : parseInt(raw,10);
+  runBtn.disabled=true; runBtn.textContent="Running…";
+  await Promise.all([runColumn("ernie", runSeed), runColumn("baseline", runSeed)]);
+  runBtn.disabled=false; runBtn.textContent="Run both →";
+}
+runBtn.onclick=run;
+inputEl.addEventListener("keydown",e=>{ if((e.metaKey||e.ctrlKey)&&e.key==="Enter") run(); });
+
+renderMode();
+</script>
+</body>
+</html>

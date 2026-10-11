@@ -1,0 +1,57 @@
+{
+  "_note": "Adversarial-review findings on bucket2_all_v2.jsonl (openers fixed, leak issue found). Use to target the v3 fix. Generated session 6 (2026-06-28).",
+  "set_reviewed": "pipeline/bucket2_all_v2.jsonl (228 rows, openers balanced)",
+  "automated_gate": "PASSED all mechanical checks incl. new top-2 opener <=45% (was 75%, now 36.8%)",
+  "review": "27-agent workflow: 12-batch multi-lens -> skeptical re-check -> 2 critics + zero-overlap audit",
+  "done_criteria_for_v3": "0 hard leaks AND 0 false-entity answerability. Soft single-phrase overlap + minor naturalness = acceptable OR single-row targeted regen (do NOT gold-plate).",
+
+  "regression_diagnostic": {
+    "v1_original_requests_cc_ge4_pct": 5.7,
+    "v2_regen_requests_cc_ge4_pct": 19.3,
+    "verdict": "v2 regeneration INCREASED enumeration-leak vs v1; forced-form + 'names real particulars' prompt line induce it. cc=shared non-proper content words req vs target."
+  },
+  "leak_by_assigned_form": {
+    "describe": {"rows": 44, "cc_ge4": 11, "confirmed_leak": 7},
+    "capture":  {"rows": 35, "cc_ge4": 11, "confirmed_leak": 4},
+    "give":     {"rows": 40, "cc_ge4": 9,  "confirmed_leak": 2},
+    "what":     {"rows": 40, "cc_ge4": 2,  "confirmed_leak": 1},
+    "show":     {"rows": 33, "cc_ge4": 4,  "confirmed_leak": 1},
+    "tell":     {"rows": 36, "cc_ge4": 7,  "confirmed_leak": 0}
+  },
+  "mechanical_count_is_not_a_gate": "Confirmed leaks span cc=2..11; clean rows also reach cc>=4. A shared-word COUNT cannot separate subject-naming from detail-enumeration. The LLM review IS the leak gate for this bucket; cc-scan is only a cheap pre-filter.",
+
+  "confirmed_hard": [
+    {"id": "b2_farewell-to-arms_00348064", "lens": "answerability", "note": "'Catherine Ferguson' merges two characters (Catherine Barkley + Helen Ferguson); false entity. cc=1 -> count can't catch."},
+    {"id": "b2_farewell-to-arms_00006690", "lens": "leak", "note": "'bawdy house', 'snow fall', 'mountains remained untaken'"},
+    {"id": "b2_farewell-to-arms_00063379", "lens": "leak", "note": "'chestnut woods', 'rough military road', 'two mountain ranges'"},
+    {"id": "b2_men-without-women_00160706", "lens": "leak", "note": "Nick/Petoskey/Harbour Springs + 'sandy road' + 'into the hills'"},
+    {"id": "b2_men-without-women_00178922", "lens": "leak", "note": "'spring skiing in the Silvretta', 'relief of being in the valley'"},
+    {"id": "b2_men-without-women_00206472", "lens": "leak", "note": "'lying on the floor listening to the silkworms eating' near-verbatim; ALSO form_fit awkward ('What was ... like?')"},
+    {"id": "b2_men-without-women_00178328", "lens": "leak", "note": "'peasant', 'filling in a grave', 'bright May morning'"},
+    {"id": "b2_men-without-women_00174880", "lens": "leak", "note": "'leveled fortifications', 'brown wooden cars'"},
+    {"id": "b2_men-without-women_00181270", "lens": "leak", "note": "ENUMERATION poster child: beer bottles/road/dusty trees/field with crows/stream/mill (cc=11)"},
+    {"id": "b2_the-sun-also-rises_00322165", "lens": "leak", "note": "Romero: 'the jolt', 'faced the bull', 'shirt ripped', 'sword hilt in the bull's shoulders'"},
+    {"id": "b2_the-sun-also-rises_00005085", "lens": "leak", "note": "BORDERLINE (advisor): 'took him in hand' is a common idiom; weakest of the 12. Optional fix."},
+    {"id": "b2_the-sun-also-rises_00217166", "lens": "leak", "note": "restates one-sentence target: 'out of church', 'walk', 'gypsy camp'"}
+  ],
+  "confirmed_soft": [
+    {"id": "b2_farewell-to-arms_00383239", "lens": "leak", "note": "'white villas' verbatim (2-word image)"},
+    {"id": "b2_farewell-to-arms_00004752", "lens": "naturalness", "note": "'the speaker's thoughts' - lit-quiz register, definite article no antecedent"},
+    {"id": "b2_farewell-to-arms_00343622", "lens": "naturalness", "note": "'the speaker's feelings' - same lit-quiz register"},
+    {"id": "b2_farewell-to-arms_00329753", "lens": "answerability", "note": "boy/guard misattribution (rider is the adult narrator; only 'boy' is the guard)"},
+    {"id": "b2_men-without-women_00181270", "lens": "naturalness", "note": "overlong enumeration also reads unnatural"},
+    {"id": "b2_the-sun-also-rises_00344151", "lens": "naturalness+leak", "note": "minor"},
+    {"id": "b2_the-sun-also-rises_00239358", "lens": "leak", "note": "minor phrase overlap"},
+    {"id": "b2_the-sun-also-rises_00148110", "lens": "leak", "note": "minor phrase overlap"}
+  ],
+  "zero_overlap_audit": "14 zero-content-overlap rows audited; 0 unanswerable (clean paraphrases, not defects).",
+
+  "critics_by_design_DO_NOT_chase": [
+    "intent/syntactic monotony: ALL bucket-2 requests are description-intent BY DESIGN; intent diversity is CROSS-bucket (buckets 1 reflective / 3 flatten / 4 practical). Do not inject other intents into bucket 2.",
+    "'deployment mismatch' (forced openers real users won't type) is moot under the neutral-system-prompt design (voice lives in weights; inference prompt picks task)."
+  ],
+  "critics_gate_gaps_optional_later": [
+    "answerability_zero_overlap is computed but not gated (left as soft, correct).",
+    "no semantic-leak gate (the LLM review fills this); no intent/speech-act diversity metric; templating after word-3 invisible; per-opener length/register not measured; topic concentration (trains/stations) & corpus skew (170/228 from 2 novels) not measured. None blocking; revisit if scaling bucket QA."
+  ]
+}

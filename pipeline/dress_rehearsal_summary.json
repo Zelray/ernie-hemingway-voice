@@ -1,0 +1,23 @@
+{
+  "per_work_supply": {
+    "the-sun-also-rises": 272,
+    "farewell-to-arms": 270,
+    "in-our-time": 23,
+    "men-without-women": 166,
+    "three-short-stories-and-ten-poems": 47
+  },
+  "total_est_clean_spans": 778,
+  "capped_total": 408,
+  "per_work_cap_carrier": 115,
+  "per_work_cap_thin": 40,
+  "carrier_works": [
+    "farewell-to-arms",
+    "men-without-women",
+    "the-sun-also-rises"
+  ],
+  "bucket3_target": 350,
+  "can_reach_350": true,
+  "overlaps_found": true,
+  "propernoun_max": 0.1,
+  "bucket1_reserved_count": 1
+}
