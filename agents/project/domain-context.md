@@ -16,7 +16,7 @@ Verified facts and limitations. New facts follow M5. Historical decisions are in
 - QLoRA uses 4-bit loading, rank 16, alpha 16, the seven configured linear projections, learning rate 2e-4, sequence length 1024, and three epochs with saved checkpoints. Training dependencies live in the Colab notebook. (c533a5a)
 - The notebook builder writes the notebook at import time. Gates inspect its declarative constants through AST parsing; they never import it. All 13 cell sources must match. (c533a5a)
 - Some generator modules read a local API key at import. Offline gates parse their syntax and inspect calls without importing them. The evaluator's --dry option writes caches and reports, so it is not an offline verification command. (c533a5a)
-- New generation scripts call the shared Gemini client in pipeline/gemini_client.py. The five historical generators keep their inlined copies and still read the key at import. (3357af9)
+- New generation scripts call the shared Gemini client in pipeline/gemini_client.py. The five historical generators keep their inlined copies and still read the key at import. (910439d)
 - The browser calls only the local proxy. Endpoint URLs and inference keys stay on the server. The proxy supports local and cloud endpoints. (c533a5a)
 
 ## Model license correction
