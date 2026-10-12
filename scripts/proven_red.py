@@ -8,7 +8,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from quality_common import ROOT
+import quality_common
 from test_reports import classify
 
 NON_CODE = {".md", ".rst", ".txt", ".yml", ".yaml", ".json", ".jsonl"}
@@ -18,7 +18,7 @@ GATE_TESTS = {"tests/test_instruction_gate.py", "tests/test_gate_tools.py", "tes
               "tests/test_mutation_smoke.py"}
 
 
-def git(*args, cwd=ROOT):
+def git(*args, cwd):
     return subprocess.check_output(["git", *args], cwd=cwd)
 
 
@@ -63,18 +63,19 @@ def warn(message):
     print(f"::warning::proven-red: {message}" if os.environ.get("GITHUB_ACTIONS") else f"proven-red warning: {message}")
 
 
-def main():
+def main(argv=None, repo=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("base")
     parser.add_argument("head")
     parser.add_argument("--title", default="")
-    args = parser.parse_args()
-    fork = git("merge-base", args.base, args.head).decode().strip()
-    changed = git("diff", "--name-only", f"{fork}..{args.head}").decode().splitlines()
-    live = git("diff", "--name-only", "--diff-filter=d", f"{fork}..{args.head}").decode().splitlines()
+    args = parser.parse_args(argv)
+    repo = Path(repo) if repo is not None else Path(quality_common.ROOT)
+    fork = git("merge-base", args.base, args.head, cwd=repo).decode().strip()
+    changed = git("diff", "--name-only", f"{fork}..{args.head}", cwd=repo).decode().splitlines()
+    live = git("diff", "--name-only", "--diff-filter=d", f"{fork}..{args.head}", cwd=repo).decode().splitlines()
     sources = [p for p in changed if source(p)]
     application_files = {name for revision in (fork, args.head)
-                         for name in git("ls-tree", "-r", "--name-only", revision).decode().splitlines()
+                         for name in git("ls-tree", "-r", "--name-only", revision, cwd=repo).decode().splitlines()
                          if source(name) and not gate(name) and name.endswith(".py")}
     tests = [p for p in live if unit(p) and not gate(p)]
     print(f"proven-red inspected {len(changed)} changed paths, {len(sources)} source paths, {len(tests)} unit files")
@@ -82,7 +83,7 @@ def main():
         print("proven-red skipped: no application source changes; gates use scratch negative controls")
         return 0
     if not tests:
-        title = args.title or git("log", "-1", "--format=%s", args.head).decode().strip()
+        title = args.title or git("log", "-1", "--format=%s", args.head, cwd=repo).decode().strip()
         kind = re.match(r"^([a-z]+)(?:\([^)]*\))?!?:", title)
         if kind and kind[1] in SKIP_TYPES:
             warn(f"unverified title type {kind[1]} bypasses proof; no changed unit tests")
@@ -91,16 +92,16 @@ def main():
         return 1
     with tempfile.TemporaryDirectory(prefix="ernie-proven-red-") as temp:
         head_root = Path(temp) / "head"
-        git("worktree", "add", "--detach", "--quiet", str(head_root), args.head)
+        git("worktree", "add", "--detach", "--quiet", str(head_root), args.head, cwd=repo)
         try:
             for index, name in enumerate(tests):
                 result, cases = pytest_report(head_root, name, Path(temp) / f"control-{index}.xml")
                 if result.returncode or any(c.find("skipped") is not None or c.find("error") is not None for c in cases):
                     raise ValueError(f"HEAD test control is not green: {name}\n{result.stdout}")
         finally:
-            git("worktree", "remove", "--force", str(head_root))
+            git("worktree", "remove", "--force", str(head_root), cwd=repo)
         root = Path(temp) / "old"
-        git("worktree", "add", "--detach", "--quiet", str(root), fork)
+        git("worktree", "add", "--detach", "--quiet", str(root), fork, cwd=repo)
         try:
             old_names = {}
             for index, name in enumerate(tests):
@@ -115,7 +116,7 @@ def main():
                 if unit(name) or support(name) or name == "pyproject.toml":
                     path = root / name
                     path.parent.mkdir(parents=True, exist_ok=True)
-                    path.write_bytes(git("show", f"{args.head}:{name}"))
+                    path.write_bytes(git("show", f"{args.head}:{name}", cwd=repo))
             failures = []
             for index, name in enumerate(tests):
                 result, cases = pytest_report(root, name, Path(temp) / f"head-{index}.xml")
@@ -137,7 +138,7 @@ def main():
                 print("\n".join(failures))
                 return 1
         finally:
-            git("worktree", "remove", "--force", str(root))
+            git("worktree", "remove", "--force", str(root), cwd=repo)
     print("PROVEN RED PASSED")
     return 0
 

@@ -20,13 +20,10 @@ def commit(root, title):
 
 
 def run_proof(root, base, head):
-    # Invoke the actual script, with root redirected via its module constant in this process.
+    # Invoke the module entry, selecting the repository through its supported parameter.
     code = ("import sys; from pathlib import Path; "
             f"sys.path.insert(0,{str(ROOT / 'scripts')!r}); import proven_red; "
-            f"proven_red.ROOT=Path({str(root)!r}); "
-            f"proven_red.git.__kwdefaults__['cwd']=Path({str(root)!r}); "
-            f"sys.argv=['proven_red',{base!r},{head!r}]; "
-            "sys.exit(proven_red.main())")
+            f"sys.exit(proven_red.main([{base!r},{head!r}], repo=Path({str(root)!r})))")
     return subprocess.run([sys.executable, "-c", code], cwd=root, capture_output=True, text=True, timeout=60)
 
 
