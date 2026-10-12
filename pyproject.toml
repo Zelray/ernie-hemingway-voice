@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+minversion = "9.1"
+testpaths = ["tests"]
+pythonpath = [".", "pipeline", "pipeline/eval", "scripts"]
+addopts = "--disable-plugin-autoload"
+
+[tool.ruff]
+target-version = "py313"
+extend-exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

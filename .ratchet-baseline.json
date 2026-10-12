@@ -1,0 +1,13 @@
+{
+  "lint_E401": 11,
+  "lint_E402": 2,
+  "lint_E702": 2,
+  "lint_E741": 19,
+  "lint_F401": 1,
+  "files_over_400": 1,
+  "internal_mocks": 0,
+  "existence_assertions": 0,
+  "fixed_e2e_sleeps": 0,
+  "new_file_lint": 0,
+  "accessibility_labels": 3
+}
