@@ -57,3 +57,34 @@ def test_framework_range_with_hook_attributes_skips_application_proof(tmp_path):
     result = run_proof(tmp_path, base, head)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "skipped: no application source changes" in result.stdout
+
+
+def test_characterization_of_unchanged_module_does_not_block_new_module_proof(tmp_path):
+    git(tmp_path, "init", "-q")
+    (tmp_path / "value.py").write_text("VALUE = 1\n", encoding="utf-8")
+    base = commit(tmp_path, "feat: initial fixture")
+    (tmp_path / "helper.py").write_text("HELPER = 2\n", encoding="utf-8")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests/test_value.py").write_text(
+        "from value import VALUE\n\ndef test_value():\n    assert VALUE == 1\n", encoding="utf-8")
+    (tmp_path / "tests/test_helper.py").write_text(
+        "from helper import HELPER\n\ndef test_helper():\n    assert HELPER == 2\n", encoding="utf-8")
+    head = commit(tmp_path, "feat: add helper")
+    result = run_proof(tmp_path, base, head)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "PROVEN RED PASSED" in result.stdout
+    assert "test_value.py" in result.stdout
+
+
+def test_new_module_without_importing_tests_still_fails_proof(tmp_path):
+    git(tmp_path, "init", "-q")
+    (tmp_path / "value.py").write_text("VALUE = 1\n", encoding="utf-8")
+    base = commit(tmp_path, "feat: initial fixture")
+    (tmp_path / "helper.py").write_text("HELPER = 2\n", encoding="utf-8")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests/test_value.py").write_text(
+        "from value import VALUE\n\ndef test_value():\n    assert VALUE == 1\n", encoding="utf-8")
+    head = commit(tmp_path, "feat: add helper")
+    result = run_proof(tmp_path, base, head)
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert "without a changed unit test" in result.stdout

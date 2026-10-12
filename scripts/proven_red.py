@@ -1,5 +1,6 @@
 """Run changed tests on fork-point code, rejecting new tests that already pass."""
 import argparse
+import ast
 import os
 import re
 import subprocess
@@ -38,6 +39,36 @@ def support(name):
 def source(name):
     return not (unit(name) or support(name) or name.startswith(("agents/", "docs/", ".github/", ".githooks/"))
                 or Path(name).suffix in NON_CODE or name in {"Makefile", ".gitignore", ".gitattributes", "pyproject.toml"})
+
+
+IMPORT_PREFIXES = ("", "pipeline/", "pipeline/eval/", "demo/", "scripts/")
+
+
+def imported_modules(source_text):
+    tree = ast.parse(source_text)
+    names = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            names.extend(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            names.append(node.module)
+    return names
+
+
+def import_paths(module):
+    rel = module.replace(".", "/")
+    for prefix in IMPORT_PREFIXES:
+        yield f"{prefix}{rel}.py"
+        yield f"{prefix}{rel}/__init__.py"
+
+
+def covers_application(source_text, application_changed):
+    changed = set(application_changed)
+    try:
+        modules = imported_modules(source_text)
+    except SyntaxError:
+        return True
+    return any(path in changed for module in modules for path in import_paths(module))
 
 
 def pytest_report(root, name, report):
@@ -90,6 +121,18 @@ def main(argv=None, repo=None):
             return 0
         print("proven-red failed: application source changed without a changed unit test")
         return 1
+    application_changed = [path for path in sources if not gate(path)]
+    related = []
+    for name in tests:
+        raw = git("show", f"{args.head}:{name}", cwd=repo).decode()
+        if covers_application(raw, application_changed):
+            related.append(name)
+        else:
+            warn(f"{name} does not import changed application source; skipped as characterization")
+    if not related:
+        print("proven-red failed: application source changed without a changed unit test")
+        return 1
+    tests = related
     with tempfile.TemporaryDirectory(prefix="ernie-proven-red-") as temp:
         head_root = Path(temp) / "head"
         git("worktree", "add", "--detach", "--quiet", str(head_root), args.head, cwd=repo)

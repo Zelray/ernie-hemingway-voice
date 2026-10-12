@@ -26,7 +26,7 @@ git config core.hooksPath .githooks
 
 The hook runs the instruction tests and ratchet. It checks the working tree; run the relevant tests before committing (P3). Its executable Git mode and LF line endings are versioned. Scratch controls invoke it through Git and require it to reject a contract violation. CI repeats the full gates on Windows and Linux with full Git history.
 
-The proven-red CI job compares the merge base with the submitted head. Changed application tests must pass at head and fail on the earlier code. Each new test is judged independently, so a passing test cannot hide beside a failing one. Missing application symbols produce an explicit warning. Infrastructure failures cannot satisfy proof.
+The proven-red CI job compares the merge base with the submitted head. Tests that import a changed application module must pass at head and fail on the earlier code. Each of those tests is judged independently, so a passing test cannot hide beside a failing one. A new test file that does not import any changed application module is characterization of unchanged behavior; it is skipped with a warning. Missing application symbols produce an explicit warning. Infrastructure failures cannot satisfy proof.
 
 A range with no application-source changes announces a skip. This applies to the initial framework: it tests existing behavior and proves gate rejection through scratch controls. A nonbehavior conventional title with no changed tests can also bypass proof, with a warning. Titles are unverified input; inspect those skips (M2).
 
