@@ -37,7 +37,7 @@ def support(name):
 
 def source(name):
     return not (unit(name) or support(name) or name.startswith(("agents/", "docs/", ".github/", ".githooks/"))
-                or Path(name).suffix in NON_CODE or name in {"Makefile", ".gitignore", "pyproject.toml"})
+                or Path(name).suffix in NON_CODE or name in {"Makefile", ".gitignore", ".gitattributes", "pyproject.toml"})
 
 
 def pytest_report(root, name, report):

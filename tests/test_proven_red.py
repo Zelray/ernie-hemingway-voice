@@ -46,3 +46,17 @@ def test_proven_red_real_git_range(tmp_path, mode, expected):
     result = run_proof(tmp_path, base, head)
     assert result.returncode == expected, result.stdout + result.stderr
     assert git(tmp_path, "worktree", "list", "--porcelain").count("worktree ") == 1
+
+
+def test_framework_range_with_hook_attributes_skips_application_proof(tmp_path):
+    git(tmp_path, "init", "-q")
+    (tmp_path / "value.py").write_text("VALUE = 1\n", encoding="utf-8")
+    base = commit(tmp_path, "feat: initial fixture")
+    (tmp_path / ".gitattributes").write_text(".githooks/* text eol=lf\n", encoding="utf-8")
+    (tmp_path / "tests").mkdir()
+    (tmp_path / "tests/test_value.py").write_text(
+        "from value import VALUE\n\ndef test_value():\n    assert VALUE == 1\n", encoding="utf-8")
+    head = commit(tmp_path, "chore: add existing behavior checks and hook attributes")
+    result = run_proof(tmp_path, base, head)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "skipped: no application source changes" in result.stdout
