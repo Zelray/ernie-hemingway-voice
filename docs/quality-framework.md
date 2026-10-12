@@ -14,7 +14,7 @@ The ratchet invokes Ruff once over maintained Python files. Existing findings ar
 
 Mutation smoke changes three isolated copies: span overlap detection, the near-duplicate threshold, and the coherence-loss outcome. It requires passing original controls and actual assertion verdicts after each change. Runtime exceptions, missing dependencies, skipped tests and expected failures cannot count as killed mutations. The real pipeline files are not modified.
 
-`python scripts/prove_gates.py` exercises scratch violations and confirms restored controls. It checks the actual instruction and ratchet commands and uses temporary Git ranges to verify that a new test which already passes on old code is rejected. Missing test execution is a gate error, not proof.
+`python scripts/prove_gates.py` exercises scratch violations and confirms restored controls. It checks the actual instruction and ratchet commands and uses temporary Git ranges to verify that a new test which already passes on old code is rejected. Child output is decoded as UTF-8 with replacement so Windows console bytes cannot hang the reader. The combined-command control allows five minutes because the Windows full suite takes more than two minutes. Missing test execution is a gate error, not proof.
 
 ## Commits and CI
 

@@ -10,7 +10,7 @@ from quality_common import ROOT, inventory
 
 def run(root, args, expected):
     result = subprocess.run([sys.executable, *args], cwd=root, capture_output=True,
-                            text=True, encoding="utf-8", timeout=120)
+                            text=True, encoding="utf-8", errors="replace", timeout=300)
     if result.returncode != expected:
         raise ValueError(f"{args}: expected exit {expected}, got {result.returncode}\n{result.stdout}{result.stderr}")
     return result.stdout
@@ -19,7 +19,8 @@ def run(root, args, expected):
 def main():
     # The tests use actual scratch Git ranges for proven-red and corrupted contracts.
     run(ROOT, ["-m", "pytest", "-q", "tests/test_ratchet.py", "tests/test_pr_body.py",
-               "tests/test_proven_red.py", "tests/test_report_verdicts.py", "tests/test_instruction_gate.py"], 0)
+               "tests/test_proven_red.py", "tests/test_report_verdicts.py",
+               "tests/test_instruction_gate.py", "tests/test_gate_tools.py"], 0)
     with tempfile.TemporaryDirectory(prefix="ernie-gate-proof-") as temp:
         root = Path(temp)
         for name in inventory():
