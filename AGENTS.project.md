@@ -41,6 +41,12 @@ Path: `cells`, `to_lines` in `pipeline/train/build_notebook.py`; output `pipelin
 Never: hand-edit notebook cells independently of their builder.
 Gate: `tests/test_instruction_gate.py` compares all generated cells without importing the writer; review training-method and prompt validity.
 
+### D7 Gemini client
+Owns: Gemini endpoint call, key handling, retry/backoff, `[ERROR ...]` tagging, inter-call pacing.
+Path: `load_key`, `GeminiClient` in `pipeline/gemini_client.py`; `tests/test_gemini_client.py`.
+Never: define a local retry/backoff Gemini `generate()` in a new run script; read the API key at import time.
+Gate: `tests/test_gemini_client.py`; review.
+
 ## Project rules
 
 - R1. Run commands from the repo root. Run `git config core.hooksPath .githooks` once per clone. Gate: review; CI reruns gates.

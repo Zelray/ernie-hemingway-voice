@@ -36,7 +36,7 @@ CI is not active for these local commits until they are pushed. Discovery found 
 
 ## Review boundaries
 
-Contracts D1–D6 combine automated clauses with review clauses. Tests establish the declared data and prompt outcomes. Review establishes corpus rights, representative samples, full rewrite fidelity, answer usefulness, judge independence, model lineage, fair prompts, streaming recovery and valid training choices.
+Contracts D1–D7 combine automated clauses with review clauses. Tests establish the declared data and prompt outcomes. Review establishes corpus rights, representative samples, full rewrite fidelity, answer usefulness, judge independence, model lineage, fair prompts, streaming recovery and valid training choices.
 
 The out-of-scope ledger records existing application defects and the model-license correction. Setup does not repair or conceal those issues. Pick each fix separately, state its acceptance outcome, and lower any affected ratchet count after it passes.
 

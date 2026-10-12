@@ -83,7 +83,7 @@ def fields(body):
 
 def validate_contracts(root=ROOT):
     blocks = contracts(root)
-    assert len(blocks) == 6, "contract inventory changed; review its minimum and scopes"
+    assert len(blocks) == 7, "contract inventory changed; review its minimum and scopes"
     files = python_files(root)
     source = "\n".join(text(root / p) for p in files if not p.startswith("tests/"))
     checked = 0
@@ -270,7 +270,8 @@ def test_corpus_allowlist_and_browser_boundary():
 @pytest.fixture
 def scratch_repo(tmp_path):
     copy_public(tmp_path, ("pipeline", "demo", "agents"),
-                (*LOADED, "tests/test_instruction_gate.py", "tests/test_pipeline.py", "tests/test_demo.py"))
+                (*LOADED, "tests/test_instruction_gate.py", "tests/test_pipeline.py",
+                 "tests/test_demo.py", "tests/test_gemini_client.py"))
     subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
     return tmp_path
 
