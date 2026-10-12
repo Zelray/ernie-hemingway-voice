@@ -23,7 +23,6 @@ oldmansea.pdf
 Hemingway, Ernest/
 
 # --- Internal project docs & working notes (not part of the public repo) ---
-CLAUDE.md
 HANDOFF.md
 +MIKES_REPO.md
 logs-*.txt
@@ -60,3 +59,11 @@ __pycache__/
 *.pyo
 .DS_Store
 Thumbs.db
+
+# Local framework evidence and dependency caches
+GATES.md
+.unlazy/
+.unlazy-hook-state.json
+.pytest_cache/
+.ruff_cache/
+.venv/
